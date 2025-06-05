@@ -14,7 +14,7 @@ export const fetchSlider = async (id) => {
 
 export const fetchSliders = async () => {
   try {
-    const response = await fetch(`${baseUrl}/sliders/ong-espoir`);
+    const response = await fetch(`${baseUrl}/sliders/innov-imo`);
     if (!response.ok)
       throw new Error("Erreur lors de la récupération des données");
     return await response.json();
