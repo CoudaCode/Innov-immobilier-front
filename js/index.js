@@ -195,45 +195,45 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
-    const footerData = footerRes.data.find((item) => item.type === "footer");
+    // const footerData = footerRes.data.find((item) => item.type === "footer");
+    // console.log;
+    // if (footerData && footerData.data) {
+    //   const data = footerData.data;
 
-    if (footerData && footerData.data) {
-      const data = footerData.data;
+    //   document.getElementById("footer-address").innerHTML = data.addresse || "";
+    //   document.getElementById("footer-phone").innerText = `Tel : ${
+    //     data.telephone || ""
+    //   }`;
+    //   document.getElementById("footer-hours").innerText = data.horaires || "";
+    //   document.getElementById("footer-email").innerText = data.email || "";
+    //   document.getElementById("footer-copyright").innerText =
+    //     data.copyright || "";
 
-      document.getElementById("footer-address").innerHTML = data.addresse || "";
-      document.getElementById("footer-phone").innerText = `Tel : ${
-        data.telephone || ""
-      }`;
-      document.getElementById("footer-hours").innerText = data.horaires || "";
-      document.getElementById("footer-email").innerText = data.email || "";
-      document.getElementById("footer-copyright").innerText =
-        data.copyright || "";
+    //   if (data.facebook) {
+    //     document.getElementById("footer-facebook").href = data.facebook;
+    //   }
+    //   if (data.linkedin) {
+    //     document.getElementById("footer-linkedin").href = data.linkedin;
+    //   }
 
-      if (data.facebook) {
-        document.getElementById("footer-facebook").href = data.facebook;
-      }
-      if (data.linkedin) {
-        document.getElementById("footer-linkedin").href = data.linkedin;
-      }
+    //   console.log("✅ Footer chargé avec succès !");
+    // }
 
-      console.log("✅ Footer chargé avec succès !");
-    }
+    // const footerElement = document.getElementById("footer");
+    // if (footerElement) {
+    //   const observer = new MutationObserver((mutationsList) => {
+    //     for (let mutation of mutationsList) {
+    //       if (mutation.type === "childList") {
+    //         console.warn("⚠️ Le footer a été modifié !");
+    //       }
+    //     }
+    //   });
 
-    const footerElement = document.getElementById("footer");
-    if (footerElement) {
-      const observer = new MutationObserver((mutationsList) => {
-        for (let mutation of mutationsList) {
-          if (mutation.type === "childList") {
-            console.warn("⚠️ Le footer a été modifié !");
-          }
-        }
-      });
-
-      observer.observe(footerElement, {
-        childList: true,
-        subtree: true,
-      });
-    }
+    //   observer.observe(footerElement, {
+    //     childList: true,
+    //     subtree: true,
+    //   });
+    // }
   } catch (error) {
     console.error("Erreur lors du chargement des données :", error);
   }
