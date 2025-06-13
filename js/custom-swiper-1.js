@@ -15,7 +15,4 @@ const swiper = new Swiper('.swiper', {
           el: false,
           clickable: false,
     },
-
-  
-
 });

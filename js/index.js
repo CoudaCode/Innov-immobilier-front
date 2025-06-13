@@ -195,45 +195,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
-    // const footerData = footerRes.data.find((item) => item.type === "footer");
-    // console.log;
-    // if (footerData && footerData.data) {
-    //   const data = footerData.data;
+    const footerData = footerRes.data.find((item) => item.type === "footer");
+    if (footerData && footerData.data) {
+      const data = footerData.data;
 
-    //   document.getElementById("footer-address").innerHTML = data.addresse || "";
-    //   document.getElementById("footer-phone").innerText = `Tel : ${
-    //     data.telephone || ""
-    //   }`;
-    //   document.getElementById("footer-hours").innerText = data.horaires || "";
-    //   document.getElementById("footer-email").innerText = data.email || "";
-    //   document.getElementById("footer-copyright").innerText =
-    //     data.copyright || "";
+      const footerAddress = document.getElementById("footer-address");
+      const footerPhone = document.getElementById("footer-phone");
+      const footerHours = document.getElementById("footer-hours");
+      const footerEmail = document.getElementById("footer-email");
+      const footerCopyright = document.getElementById("footer-copyright");
+      const footerFacebook = document.getElementById("footer-facebook");
+      const footerLinkedin = document.getElementById("footer-linkedin");
 
-    //   if (data.facebook) {
-    //     document.getElementById("footer-facebook").href = data.facebook;
-    //   }
-    //   if (data.linkedin) {
-    //     document.getElementById("footer-linkedin").href = data.linkedin;
-    //   }
+      if (footerAddress) footerAddress.innerHTML = data.addresse || "";
+      if (footerPhone) footerPhone.innerText = `Tel : ${data.telephone || ""}`;
+      if (footerHours) footerHours.innerText = data.horaires || "";
+      if (footerEmail) footerEmail.innerText = data.email || "";
+      if (footerCopyright) footerCopyright.innerText = data.copyright || "";
+      if (footerFacebook && data.facebook) footerFacebook.href = data.facebook;
+      if (footerLinkedin && data.linkedin) footerLinkedin.href = data.linkedin;
 
-    //   console.log("✅ Footer chargé avec succès !");
-    // }
-
-    // const footerElement = document.getElementById("footer");
-    // if (footerElement) {
-    //   const observer = new MutationObserver((mutationsList) => {
-    //     for (let mutation of mutationsList) {
-    //       if (mutation.type === "childList") {
-    //         console.warn("⚠️ Le footer a été modifié !");
-    //       }
-    //     }
-    //   });
-
-    //   observer.observe(footerElement, {
-    //     childList: true,
-    //     subtree: true,
-    //   });
-    // }
+      console.log("✅ Footer chargé avec succès !");
+    }
   } catch (error) {
     console.error("Erreur lors du chargement des données :", error);
   }
