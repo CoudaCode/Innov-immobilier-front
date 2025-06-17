@@ -1,12 +1,56 @@
 import {
+  aboutData,
+  dataAfterSliders,
+  fetchAprops,
   fetchBannerIndex,
   fetchFeaturesData,
+  fetchHeader,
   fetchSlidersData,
 } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    // Bannière
+    setTimeout(() => {
+      const footer = document.querySelector("footer");
+      if (footer) {
+        footer.style.position = "relative";
+        footer.style.zIndex = "999";
+        document.body.style.overflow = "visible";
+      }
+
+      // Réinitialise les styles problématiques
+      document.querySelectorAll("section").forEach((section) => {
+        section.style.overflow = "visible";
+        section.style.height = "auto";
+      });
+    }, 500);
+    const header = await fetchHeader();
+
+    if (header && header.content) {
+      const headerContent = document.getElementById("header-content");
+      if (headerContent) {
+        headerContent.innerHTML = header.content;
+      }
+    }
+
+    const about = await aboutData();
+    if (about.content) {
+      const aboutContent = document.getElementById("about-content");
+      if (aboutContent) {
+        aboutContent.innerHTML = about.content;
+      }
+    }
+
+    const aprops = await fetchAprops();
+    console.log(aprops);
+
+    if (aprops && aprops.content) {
+      const apropsContent = document.getElementById("aprops-content");
+      if (apropsContent) {
+        apropsContent.innerHTML = aprops.content;
+      }
+    }
+
     const banners = await fetchBannerIndex();
     let imagesBaner = banners.map(
       (item) => "http://localhost:8000/storage/" + item
@@ -59,7 +103,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
-    // Feature
     const feacturesData = await fetchFeaturesData();
 
     const featuresContainer = document.getElementById("features-container");
@@ -91,7 +134,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
-    // Sliders
     const slidersData = await fetchSlidersData();
     const slidersContainer = document.getElementById("room-carousel");
 
@@ -156,6 +198,42 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         });
       }
+    }
+
+    const dataAfterData = await dataAfterSliders();
+
+    const features = dataAfterData.filter((item) => item.icon);
+    const overview = dataAfterData.find((item) => !item.icon);
+
+    const overviewContainer = document.getElementById("features-overview");
+    if (overview && overviewContainer) {
+      const title = overviewContainer.querySelector("h2");
+      const desc = overviewContainer.querySelector("p");
+      if (title) title.textContent = overview.title;
+      if (desc)
+        desc.innerHTML = (overview.description || "").replace(/\n/g, "<br>");
+    }
+    const cardsContainer = document.getElementById("features-cards");
+    if (cardsContainer && features.length > 0) {
+      cardsContainer.innerHTML = "";
+      features.forEach((feature) => {
+        const card = `
+          <div class="col-md-6">
+            <div class="h-100 rounded-1">
+              <img
+                src="http://localhost:8000/storage/${feature.icon}"
+                class="w-70px mb-4 wow scaleIn"
+                alt="${feature.title}"
+              />
+              <div class="relative wow fadeInUp">
+                <h4>${feature.title}</h4>
+                <p class="mb-0">${feature.description || ""}</p>
+              </div>
+            </div>
+          </div>
+    `;
+        cardsContainer.insertAdjacentHTML("beforeend", card);
+      });
     }
   } catch (error) {
     console.error("Erreur lors du chargement de la bannière :", error);

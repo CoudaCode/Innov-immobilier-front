@@ -66,3 +66,142 @@ export const fetchSlidersData = async () => {
     return null;
   }
 };
+
+export const dataAfterSliders = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/features`);
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    const filteredData = data.data.filter(
+      (item) => item.section_id && item.section_id === 14
+    );
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+export const aboutData = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/sections/12`);
+
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const fetchHeader = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/sections/11`);
+
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const fetchAprops = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/sections/13`);
+
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const fetchAboutExpertise = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/sections/16`);
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const fetchSectionsData = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/sections?page=2`);
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    console.log("data", data);
+    const filteredData = data.data
+      .filter((item) => item.type && item.type.startsWith("expertise-section"))
+      .map((item) => {
+        return {
+          title: item.title,
+          content: item.content,
+          image: "http://localhost:8000/storage/" + item.image_path,
+        };
+      });
+
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const fetchPartners = async () => {
+  try {
+    let allData = [];
+    let page = 1;
+    let lastPage = 1;
+
+    do {
+      const response = await fetch(
+        `${baseUrl}/app/innov-team/features?page=${page}`
+      );
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des données");
+      const data = await response.json();
+
+      allData = allData.concat(data.data);
+      lastPage = data.meta.last_page;
+      page++;
+    } while (page <= lastPage);
+
+    allData = allData
+      .filter((item) => item.section_id && item.section_id === 20)
+      .map((item) => {
+        return {
+          title: item.title,
+          image: "http://localhost:8000/storage/" + item.icon,
+          description: item.description,
+        };
+      });
+    return allData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const bannerNosExpertise = async (data) => {
+  try {
+    const response = await axios.post(`${API_URL}/sections/15`, data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
