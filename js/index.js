@@ -235,6 +235,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         cardsContainer.insertAdjacentHTML("beforeend", card);
       });
     }
+
+    const pageLoader = document.getElementById("de-loader");
+    if (pageLoader) {
+      pageLoader.style.opacity = "0";
+      setTimeout(() => {
+        pageLoader.style.display = "none";
+      }, 400);
+    }
   } catch (error) {
     console.error("Erreur lors du chargement de la bannière :", error);
   }

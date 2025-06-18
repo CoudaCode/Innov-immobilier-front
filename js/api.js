@@ -143,7 +143,7 @@ export const fetchSectionsData = async () => {
     if (!response.ok)
       throw new Error("Erreur lors de la récupération des données");
     const data = await response.json();
-    console.log("data", data);
+
     const filteredData = data.data
       .filter((item) => item.type && item.type.startsWith("expertise-section"))
       .map((item) => {
@@ -196,10 +196,43 @@ export const fetchPartners = async () => {
   }
 };
 
-export const bannerNosExpertise = async (data) => {
+export const bannerNosExpertise = async () => {
   try {
-    const response = await axios.post(`${API_URL}/sections/15`, data);
-    return response.data;
+    const response = await fetch(`${baseUrl}/app/innov-team/sections/15`);
+
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const ImageBannerSlider = async () => {
+  try {
+    let allData = [];
+    let page = 1;
+    let lastPage = 1;
+    do {
+      const response = await fetch(
+        `${baseUrl}/app/innov-team/features?page=${page}`
+      );
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des données");
+      const data = await response.json();
+
+      allData = allData.concat(data.data);
+      lastPage = data.meta.last_page;
+      page++;
+    } while (page <= lastPage);
+
+    allData = allData.filter(
+      (item) => item.section_id && item.section_id === 13
+    );
+    console.log("allData", allData);
+    return allData.map((item) => "http://localhost:8000/storage/" + item.icon);
   } catch (error) {
     console.error(error);
     return null;

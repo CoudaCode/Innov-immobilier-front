@@ -1,8 +1,9 @@
 import {
+  bannerNosExpertise,
   fetchAboutExpertise,
   fetchHeader,
-  fetchPartners,
   fetchSectionsData,
+  ImageBannerSlider,
 } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         section.style.height = "auto";
       });
     }, 500);
+
     const header = await fetchHeader();
     if (header && header.content) {
       const headerContent = document.getElementById("header-content");
@@ -29,6 +31,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
+    const banners = await bannerNosExpertise();
+    if (banners && banners.image_path) {
+      const slideHero = document.getElementById("slide-hero");
+      if (slideHero) {
+        // Change l'attribut data-bgimage
+        slideHero.setAttribute(
+          "data-bgimage",
+          `url(http://localhost:8000/storage/${banners.image_path})`
+        );
+        slideHero.style.backgroundImage = `url(http://localhost:8000/storage/${banners.image_path})`;
+      }
+    }
     const expertise = await fetchAboutExpertise();
     if (expertise) {
       const expertiseContent = document.getElementById("expertise-description");
@@ -83,28 +97,55 @@ document.addEventListener("DOMContentLoaded", async () => {
         sectionsContainer.insertAdjacentHTML("beforeend", sectionHTML);
       });
     }
-    const partners = await fetchPartners();
-    console.log("partners", partners);
-    const galleryContainer = document.getElementById("gallery");
-    if (galleryContainer && Array.isArray(partners)) {
-      galleryContainer.innerHTML = "";
+    // const partners = await fetchPartners();
+    // console.log("partners", partners);
+    // const galleryContainer = document.getElementById("gallery");
+    // if (galleryContainer && Array.isArray(partners)) {
+    //   galleryContainer.innerHTML = "";
 
-      partners.forEach((partner) => {
-        const partnerHTML = `
-          <div class="col-md-3 col-sm-6 col-12 item ${partner.description}">
-            <a href="${partner.image}" class="image-popup d-block hover" title="${partner.title}">
-              <div class="relative overflow-hidden">
-                <div class="absolute start-0 w-100 h-100 hover-op-1 z-2"></div>
-                <img src="${partner.image}" class="w-100 hover-scale-1-2" alt="${partner.title}" loading="lazy">
-              </div>
-            </a>
-          </div>
-        `;
-        galleryContainer.insertAdjacentHTML("beforeend", partnerHTML);
-      });
+    //   partners.forEach((partner) => {
+    //     const partnerHTML = `
+    //       <div class="col-md-3 col-sm-6 col-12 item ${partner.description}">
+    //         <a href="${partner.image}" class="image-popup d-block hover" title="${partner.title}">
+    //           <div class="relative overflow-hidden">
+    //             <div class="absolute start-0 w-100 h-100 hover-op-1 z-2"></div>
+    //             <img src="${partner.image}" class="w-100 hover-scale-1-2" alt="${partner.title}" loading="lazy">
+    //           </div>
+    //         </a>
+    //       </div>
+    //     `;
+    //     galleryContainer.insertAdjacentHTML("beforeend", partnerHTML);
+    //   });
+    // }
+
+    const imageAboutExpertise = await ImageBannerSlider();
+    console.log("imageAboutExpertise", imageAboutExpertise);
+    if (Array.isArray(imageAboutExpertise) && imageAboutExpertise.length >= 4) {
+      const aboutExpertise = document.getElementById("about-expertise");
+      if (aboutExpertise) {
+        aboutExpertise.innerHTML = `
+      <div class="row g-4">
+        <div class="col-6">
+          <img src="${imageAboutExpertise[0]}" class="img-fluid mb-4 w-70 ms-30 wow scaleIn" alt="">
+          <img src="${imageAboutExpertise[1]}" class="img-fluid wow scaleIn" alt="">
+        </div>
+        <div class="col-6">
+          <div class="spacer-single sm-hide"></div>
+          <img src="${imageAboutExpertise[2]}" class="img-fluid mb-4 wow scaleIn" alt="">
+          <img src="${imageAboutExpertise[3]}" class="img-fluid w-70 wow scaleIn" alt="">
+        </div>
+      </div>
+    `;
+      }
     }
 
-    const slides = document.getElementById("slide-hero");
+    const pageLoader = document.getElementById("de-loader");
+    if (pageLoader) {
+      pageLoader.style.opacity = "0";
+      setTimeout(() => {
+        pageLoader.style.display = "none";
+      }, 400);
+    }
   } catch (error) {
     console.error("Erreur lors du chargement des données :", error);
   }
