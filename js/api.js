@@ -238,3 +238,195 @@ export const ImageBannerSlider = async () => {
     return null;
   }
 };
+
+// Innovplaza
+export const aboutInnovplaza = async () => {
+  try {
+    let allData = [];
+    let page = 1;
+    let lastPage = 1;
+
+    do {
+      const response = await fetch(
+        `${baseUrl}/app/innov-team/sliders?page=${page}`
+      );
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des données");
+      const data = await response.json();
+
+      allData = allData.concat(data.data);
+      lastPage = data.meta.last_page;
+      page++;
+    } while (page <= lastPage);
+
+    const filteredData = allData.filter(
+      (item) =>
+        item.title &&
+        (item.title.startsWith("innov-plaza") ||
+          item.title.startsWith("Commercial"))
+    );
+    console.log("filteredData", filteredData);
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const dataAboutInnovplaza = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/sections/23`);
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const sectionsHomeData = async () => {
+  try {
+    let allData = [];
+    let page = 1;
+    let lastPage = 1;
+
+    do {
+      const response = await fetch(
+        `${baseUrl}/app/innov-team/sections?page=${page}`
+      );
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des données");
+      const data = await response.json();
+
+      allData = allData.concat(data.data);
+      lastPage = data.meta.last_page;
+      page++;
+    } while (page <= lastPage);
+    console.log("allData", allData);
+    const filteredData = allData.filter(
+      (item) => item.type && item.type.startsWith("plaza-feature")
+    );
+    console.log("filteredData", filteredData);
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const fetchAboutInnovplaza = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/sections/22`);
+
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const fetchDataSpace = async () => {
+  try {
+    let allData = [];
+    let page = 1;
+    let lastPage = 1;
+
+    do {
+      const response = await fetch(
+        `${baseUrl}/app/innov-team/features?page=${page}`
+      );
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des données");
+      const data = await response.json();
+
+      allData = allData.concat(data.data);
+      lastPage = data.meta.last_page;
+      page++;
+    } while (page <= lastPage);
+    const filteredData = allData.filter(
+      (item) => item.section_id && item.section_id === 21
+    );
+    console.log("filteredData", filteredData);
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getAboutDataNosConcepts = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/app/innov-team/sections/24`);
+
+    if (!response.ok)
+      throw new Error("Erreur lors de la récupération des données");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+export const getHotelsDataNosConcepts = async () => {
+  try {
+    let allData = [];
+    let page = 1;
+    let lastPage = 1;
+
+    do {
+      const response = await fetch(
+        `${baseUrl}/app/innov-team/sections?page=${page}`
+      );
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des données");
+      const data = await response.json();
+
+      allData = allData.concat(data.data);
+      lastPage = data.meta.last_page;
+      page++;
+    } while (page <= lastPage);
+
+    // Filtrer uniquement les sliders (type commence par "sliders-")
+    const filteredData = allData.filter(
+      (item) => item.type && item.type.startsWith("sliders-")
+    );
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const aboutNosConcepts = async () => {
+  try {
+    let allData = [];
+    let page = 1;
+    let lastPage = 1;
+
+    do {
+      const response = await fetch(
+        `${baseUrl}/app/innov-team/sliders?page=${page}`
+      );
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des données");
+      const data = await response.json();
+
+      allData = allData.concat(data.data);
+      lastPage = data.meta.last_page;
+      page++;
+    } while (page <= lastPage);
+    const filteredData = allData.filter(
+      (item) => item.title && item.title === "nos-concepts-about"
+    );
+    console.log("filteredData", filteredData);
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

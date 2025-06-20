@@ -119,7 +119,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // }
 
     const imageAboutExpertise = await ImageBannerSlider();
-    console.log("imageAboutExpertise", imageAboutExpertise);
     if (Array.isArray(imageAboutExpertise) && imageAboutExpertise.length >= 4) {
       const aboutExpertise = document.getElementById("about-expertise");
       if (aboutExpertise) {
