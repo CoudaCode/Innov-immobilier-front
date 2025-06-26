@@ -1,4 +1,4 @@
-export const baseUrl = "https://backoffice.caauri.com";
+export const baseUrl = "https://backoffice.caauri.com/api";
 export const fetchFooter = async () => {
   try {
     const response = await fetch(`${baseUrl}/app/innov-team/sections`);
